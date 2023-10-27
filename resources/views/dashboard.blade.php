@@ -15,12 +15,12 @@
         </div>
     </div>
 </x-app-layout>
-<p>↓大阪？の天気</p>
+<p>↓大阪の天気</p>
 <p id="target"></p>
 <script>
     async function fetchWeather() {
         try {
-            const response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=34.6998&longitude=135.5148&hourly=weathercode");
+            const response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=34.6911&longitude=135.4969&hourly=weathercode&timezone=Asia%2FTokyo&forecast_days=1");
             
             if (!response.ok) throw new Error("Network response was not ok");
             
