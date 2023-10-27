@@ -17,6 +17,9 @@
 </x-app-layout>
 <p>↓大阪の天気</p>
 <p id="target"></p>
+
+<!-- "https://api.open-meteo.com/v1/forecast?latitude=43.3667,35.6895,33.6,35.1815,26.5381&longitude=144.4333,139.6917,130.4167,136.9064,127.9678&hourly=weathercode&timezone=Asia%2FTokyo&forecast_days=1" -->
+<!-- "https://geocoding-api.open-meteo.com/v1/search?name=fukuoka&count=1&language=en&format=json" -->
 <script>
     async function fetchWeather() {
         try {
