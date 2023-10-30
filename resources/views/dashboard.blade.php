@@ -57,8 +57,8 @@ $json = json_encode($cities);
             
             if (!response.ok) throw new Error("Network response was not ok");
             
-            var array = <?php echo $json; ?>;
-            const data = await response.json();
+            const data1 = await response.json();
+            const data2 = <?php echo $json; ?>;
             const header = document.getElementById('target');
             const today = new Date();
             const year = today.getFullYear();
@@ -100,10 +100,10 @@ $json = json_encode($cities);
                 99: "ひょうを伴う激しい雷雨",
             };
             
-            data.forEach(elm1 => {
+            data1.forEach(elm1 => {
                 const latitude1 = elm1.latitude;
                 const longitude1 = elm1.longitude;
-                array.forEach(elm2 => {
+                data2.forEach(elm2 => {
                     const city = elm2.city;
                     const latitude2 = elm2.latitude;
                     const longitude2 = elm2.longitude;
