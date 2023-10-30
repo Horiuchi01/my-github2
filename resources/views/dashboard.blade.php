@@ -1,9 +1,38 @@
+@php
+use App\Models\City;
+$cities = City::all();
+$json = json_encode($cities);
+@endphp
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
+
+    <form action="{{ route('city.con') }}" method="post">
+        @csrf
+        <label for="city-name">都市名</label>
+        <input id="city-name" type="text" name="city" placeholder="都市名を入力">
+        @error("city")
+        <p style="color: red;">{{ $message }}</p>
+        @enderror
+
+        <label for="city-latitude">緯度</label>
+        <input id="city-latitude" type="text" name="latitude" placeholder="緯度を入力">
+        @error("latitude")
+        <p style="color: red;">{{ $message }}</p>
+        @enderror
+
+        <label for="city-longitude">経度</label>
+        <input id="city-longitude" type="text" name="longitude" placeholder="経度を入力">
+        @error("longitude")
+        <p style="color: red;">{{ $message }}</p>
+        @enderror
+
+        <button type="submit">登録</button>
+    </form>
+
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -19,8 +48,16 @@
 <p>↓大阪の天気</p>
 <p id="target"></p>
 
-<!-- "https://api.open-meteo.com/v1/forecast?latitude=43.3667,35.6895,33.6,35.1815,26.5381&longitude=144.4333,139.6917,130.4167,136.9064,127.9678&hourly=weathercode&timezone=Asia%2FTokyo&forecast_days=1" -->
+<!-- "https://api.open-meteo.com/v1/forecast?latitude=33.6,35.6895,43.3667&longitude=130.4167,139.6917,144.4333&hourly=weathercode&timezone=Asia%2FTokyo&forecast_days=1" -->
 <!-- "https://geocoding-api.open-meteo.com/v1/search?name=fukuoka&count=1&language=en&format=json" -->
+
+<script>
+    var array = <?php echo $json; ?>;
+
+    array.forEach(elm => {
+    document.write(elm['city']+'の緯度は'+elm['latitude']+'、経度は'+elm['longitude']+'。<br>');
+    })
+</script>
 <script>
     async function fetchWeather() {
         try {
@@ -39,7 +76,6 @@
                 hour = "0" + hour;
             }
             const todayDate = `${year}-${month}-${day}T${hour}:00`;
-            alert(todayDate);
             const weatherMap = {
                 "Unknown": "晴天",
                 1: "晴れ",
