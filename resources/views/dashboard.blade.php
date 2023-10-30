@@ -10,7 +10,28 @@ $json = json_encode($cities);
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
+    <form action="{{ route('city.con') }}" method="post">
+        @csrf
+        <label for="city-name">都市名</label>
+        <input id="city-name" type="text" name="city" placeholder="都市名を入力">
+        @error("city")
+        <p style="color: red;">{{ $message }}</p>
+        @enderror
 
+        <label for="city-latitude">緯度</label>
+        <input id="city-latitude" type="text" name="latitude" placeholder="緯度を入力">
+        @error("latitude")
+        <p style="color: red;">{{ $message }}</p>
+        @enderror
+
+        <label for="city-longitude">経度</label>
+        <input id="city-longitude" type="text" name="longitude" placeholder="経度を入力">
+        @error("longitude")
+        <p style="color: red;">{{ $message }}</p>
+        @enderror
+
+        <button type="submit">登録</button>
+    </form>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
