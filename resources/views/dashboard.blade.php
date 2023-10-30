@@ -49,22 +49,15 @@ $json = json_encode($cities);
 <p id="target"></p>
 
 <!-- "https://api.open-meteo.com/v1/forecast?latitude=33.6,35.6895,43.3667&longitude=130.4167,139.6917,144.4333&hourly=weathercode&timezone=Asia%2FTokyo&forecast_days=1" -->
-<!-- "https://geocoding-api.open-meteo.com/v1/search?name=fukuoka&count=1&language=en&format=json" -->
 
-<script>
-    var array = <?php echo $json; ?>;
-
-    array.forEach(elm => {
-    document.write(elm['city']+'の緯度は'+elm['latitude']+'、経度は'+elm['longitude']+'。<br>');
-    })
-</script>
 <script>
     async function fetchWeather() {
         try {
-            const response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=34.6911&longitude=135.4969&hourly=weathercode&timezone=Asia%2FTokyo&forecast_days=1");
+            const response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=33.6,35.6895,43.3667&longitude=130.4167,139.6917,144.4333&hourly=weathercode&timezone=Asia%2FTokyo&forecast_days=1");
             
             if (!response.ok) throw new Error("Network response was not ok");
             
+            var array = <?php echo $json; ?>;
             const data = await response.json();
             const header = document.getElementById('target');
             const today = new Date();
@@ -106,19 +99,21 @@ $json = json_encode($cities);
                 96: "ひょうを伴う雷雨",
                 99: "ひょうを伴う激しい雷雨",
             };
-
-            if (data.hourly && data.hourly.weathercode) {
-                for(let i = 0; i < data.hourly.weathercode.length; i++) {
-                    const weatherCode = data.hourly.weathercode[i] || "Unknown"; 
-                    const weatherDate = data.hourly.time[i] || "Unknown";
-
-                    if (weatherDate == todayDate) {
-                        const weatherType = weatherMap[weatherCode] || "不明";
-                        header.insertAdjacentHTML('beforebegin', `<p>${weatherType}</p>`);
-                        header.insertAdjacentHTML('beforebegin', `<p>${weatherDate}</p>`);
-                    } 
-                }
-            }
+            
+            data.forEach(elm1 => {
+                const latitude1 = elm1.latitude;
+                const longitude1 = elm1.longitude;
+                //alert(latitude1);
+                array.forEach(elm2 => {
+                    const latitude2 = elm2.latitude;
+                    const longitude2 = elm2.longitude;
+                    alert(latitude2);
+                    if(latitude1 == latitude2 && longitude1 == longitude2)
+                    {
+                        alert("OK");
+                    }
+                })
+            });
         } catch (error) {
             console.log(`エラーが発生しました: ${error.message}`);
         }
