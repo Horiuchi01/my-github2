@@ -103,14 +103,24 @@ $json = json_encode($cities);
             data.forEach(elm1 => {
                 const latitude1 = elm1.latitude;
                 const longitude1 = elm1.longitude;
-                //alert(latitude1);
                 array.forEach(elm2 => {
+                    const city = elm2.city;
                     const latitude2 = elm2.latitude;
                     const longitude2 = elm2.longitude;
-                    alert(latitude2);
                     if(latitude1 == latitude2 && longitude1 == longitude2)
                     {
-                        alert("OK");
+                        for(let i = 0; i < data.hourly.weathercode.length; i++)
+                        {
+                            const weatherCode = data.hourly.weathercode[i] || "Unknown"; 
+                            const weatherDate = data.hourly.time[i] || "Unknown";
+                            if (weatherDate == todayDate) 
+                            {
+                                const weatherType = weatherMap[weatherCode] || "不明";
+                                header.insertAdjacentHTML('beforebegin', `<p>${weatherType}</p>`);
+                                header.insertAdjacentHTML('beforebegin', `<p>${weatherDate}</p>`);
+                            } 
+                        }
+                        header.insertAdjacentHTML('beforebegin', `<p>${city}の緯度は${latitude2}です。経度は${longitude2}です。</p>`);
                     }
                 })
             });
