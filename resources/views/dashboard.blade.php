@@ -15,6 +15,7 @@
         </div>
     </div>
 </x-app-layout>
+
 <p>↓大阪の天気</p>
 <p id="target"></p>
 
@@ -33,9 +34,12 @@
             const year = today.getFullYear();
             const month = today.getMonth() + 1;
             const day = today.getDate();
-            const hour = today.getHours();
+            let hour = today.getHours();
+            if (hour >= 0 && hour <= 9) {
+                hour = "0" + hour;
+            }
             const todayDate = `${year}-${month}-${day}T${hour}:00`;
-
+            alert(todayDate);
             const weatherMap = {
                 "Unknown": "晴天",
                 1: "晴れ",
