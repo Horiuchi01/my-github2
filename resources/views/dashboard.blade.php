@@ -1,8 +1,12 @@
 @php
 use App\Models\City;
-$cities = City::all();
+
+// リレーションを使用して、関連するusersテーブルのデータも取得
+$cities = City::with('users')->get();
+
 $json = json_encode($cities);
 @endphp
+
 
 <x-app-layout>
     <x-slot name="header">

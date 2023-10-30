@@ -14,4 +14,8 @@ class City extends Model
         "latitude",
         "longitude",
     ];
+    public function users()
+    {
+        return $this->hasMany(User::class, 'city');
+    }
 }
