@@ -45,10 +45,8 @@ $json = json_encode($cities);
     </div>
 </x-app-layout>
 
-<p>↓大阪の天気</p>
+<p>↓各都市の天気</p>
 <p id="target"></p>
-
-<!-- "https://api.open-meteo.com/v1/forecast?latitude=33.6,35.6895,43.3667&longitude=130.4167,139.6917,144.4333&hourly=weathercode&timezone=Asia%2FTokyo&forecast_days=1" -->
 
 <script>
     async function fetchWeather() {
@@ -57,8 +55,8 @@ $json = json_encode($cities);
             
             if (!response.ok) throw new Error("Network response was not ok");
             
-            const data1 = await response.json();
-            const data2 = <?php echo $json; ?>;
+            const weatherData = await response.json();
+            const citiesData = <?php echo $json; ?>;
             const header = document.getElementById('target');
             const today = new Date();
             const year = today.getFullYear();
@@ -100,27 +98,22 @@ $json = json_encode($cities);
                 99: "ひょうを伴う激しい雷雨",
             };
             
-            data1.forEach(elm1 => {
+            weatherData.forEach(elm1 => {
                 const latitude1 = elm1.latitude;
                 const longitude1 = elm1.longitude;
-                data2.forEach(elm2 => {
+                
+                citiesData.forEach(elm2 => {
                     const city = elm2.city;
                     const latitude2 = elm2.latitude;
                     const longitude2 = elm2.longitude;
-                    if(latitude1 == latitude2 && longitude1 == longitude2)
-                    {
-                        for(let i = 0; i < data.hourly.weathercode.length; i++)
-                        {
-                            const weatherCode = data.hourly.weathercode[i] || "Unknown"; 
-                            const weatherDate = data.hourly.time[i] || "Unknown";
-                            if (weatherDate == todayDate) 
-                            {
-                                const weatherType = weatherMap[weatherCode] || "不明";
-                                header.insertAdjacentHTML('beforebegin', `<p>${weatherType}</p>`);
-                                header.insertAdjacentHTML('beforebegin', `<p>${weatherDate}</p>`);
-                            } 
+
+                    if(latitude1 == latitude2 && longitude1 == longitude2) {
+                        const timeIndex = elm1.hourly.time.indexOf(todayDate);
+                        if (timeIndex !== -1) {
+                            const weatherCode = elm1.hourly.weathercode[timeIndex];
+                            const weatherType = weatherMap[weatherCode] || "不明";
+                            header.insertAdjacentHTML('beforebegin', `<p>${city}の天気: ${weatherType}</p>`);
                         }
-                        header.insertAdjacentHTML('beforebegin', `<p>${city}の緯度は${latitude2}です。経度は${longitude2}です。</p>`);
                     }
                 })
             });
