@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,10 +21,8 @@ Route::get('/', function () {
 
 Route::post('/dashboard/city', \App\Http\Controllers\CityController::class)->name("city.con");
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+Route::get('/dashboard', [CitiesController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+    
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
