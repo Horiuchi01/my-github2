@@ -17,7 +17,12 @@ return new class extends Migration
             $table->float('latitude');
             $table->float('longitude');
             $table->timestamps();
+
+            // 👈　ここに　users に対する外部キー制約を追記
         });
+
+        // 👈　ここに　users　側に cities への制約を追記
+
     }
 
     /**
@@ -25,6 +30,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // 👈　ここに　users からの外部キー制約の drop を追記
+
         Schema::dropIfExists('cities');
+
     }
 };

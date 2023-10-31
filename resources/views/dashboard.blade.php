@@ -40,10 +40,6 @@
 <p>↓各都市の天気</p>
 <div id="weatherOutput"></div>
 
-@php
-$json = json_encode($cities);
-@endphp
-
 <script>
     async function fetchWeather(city, latitude, longitude) {
         try {
@@ -88,8 +84,5 @@ $json = json_encode($cities);
         }
     }
 
-    const citiesData = <?php echo $json; ?>;
-    citiesData.forEach(cityData => {
-        fetchWeather(cityData.city, cityData.latitude, cityData.longitude);
-    });
+    fetchWeather("{{ $userCity->city }}", "{{ $userCity->latitude }}", "{{ $userCity->longitude }}");
 </script>

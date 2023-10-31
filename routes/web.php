@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\CitiesController;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/dashboard/city', \App\Http\Controllers\CityController::class)->name("city.con");
+Route::post('/dashboard/city', CityController::class)->name("city.con");
 
 Route::get('/dashboard', [CitiesController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
     

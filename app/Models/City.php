@@ -14,8 +14,4 @@ class City extends Model
         "latitude",
         "longitude",
     ];
-    public function users()
-    {
-        return $this->hasOne(User::class, 'city', 'city');
-    }
 }
