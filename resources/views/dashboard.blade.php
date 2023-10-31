@@ -1,13 +1,3 @@
-@php
-use App\Models\City;
-
-// リレーションを使用して、関連するusersテーブルのデータも取得
-$cities = City::with('users')->get();
-
-$json = json_encode($cities);
-@endphp
-
-
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -50,6 +40,10 @@ $json = json_encode($cities);
 <p>↓各都市の天気</p>
 <div id="weatherOutput"></div>
 
+@php
+$json = json_encode($cities);
+@endphp
+
 <script>
     async function fetchWeather(city, latitude, longitude) {
         try {
@@ -61,12 +55,12 @@ $json = json_encode($cities);
             const output = document.getElementById('weatherOutput');
             const today = new Date();
             const year = today.getFullYear();
-            const month = today.getMonth() + 1;
-            const day = today.getDate();
-            const hour = today.getHours();
-            if (hour >= 0 && hour <= 9) {
-                hour = "0" + hour;
-            }
+            let month = today.getMonth() + 1;
+            let day = today.getDate();
+            let hour = today.getHours();
+            month = month < 10 ? "0" + month : month;
+            day = day < 10 ? "0" + day : day;
+            hour = hour < 10 ? "0" + hour : hour;
             const todayDate = `${year}-${month}-${day}T${hour}:00`;
             const weatherMap = {
                 "Unknown": "晴天",
@@ -98,7 +92,7 @@ $json = json_encode($cities);
                 96: "ひょうを伴う雷雨",
                 99: "ひょうを伴う激しい雷雨",
             };
-
+          
             if (data.hourly && data.hourly.weathercode) {
                 for(let i = 0; i < data.hourly.weathercode.length; i++) {
                     const weatherCode = data.hourly.weathercode[i] || "Unknown"; 
@@ -110,7 +104,7 @@ $json = json_encode($cities);
                 }
             }
         } catch (error) {
-            console.log(`エラーが発生しました: ${error.message}`);
+            alert(`エラーが発生しました: ${error.message}`);
         }
     }
 

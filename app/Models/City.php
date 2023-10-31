@@ -16,6 +16,6 @@ class City extends Model
     ];
     public function users()
     {
-        return $this->hasMany(User::class, 'city');
+        return $this->hasOne(User::class, 'city', 'city');
     }
 }
