@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\City;
 
 class CitiesController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke(Request $request)
+    public function dashboard()
     {
-        //
+        // リレーションを使用して、関連するusersテーブルのデータも取得
+        $cities = City::with('users')->get();
+        return view('dashboard', ['cities' => $cities]);
     }
 }
