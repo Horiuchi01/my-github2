@@ -24,6 +24,12 @@
         <p style="color: red;">{{ $message }}</p>
         @enderror
 
+        <label for="cities_id">経度</label>
+        <input id="cities_id" type="text" name="cities_id" placeholder="都市番号を入力">
+        @error("cities_id")
+        <p style="color: red;">{{ $message }}</p>
+        @enderror
+
         <button type="submit">登録</button>
     </form>
     <div class="py-12">

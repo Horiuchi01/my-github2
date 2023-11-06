@@ -13,5 +13,6 @@ class City extends Model
         "city",
         "latitude",
         "longitude",
+        "cities_id",
     ];
 }

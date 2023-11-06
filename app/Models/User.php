@@ -22,6 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'city',
+        'city_id',
     ];
 
     /**
@@ -46,6 +47,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function userCity()
     {
-        return $this->hasOne(City::class, 'city', 'city');
+        return $this->belongsTo(City::class, 'city_id', 'cities_id');
+        /**
+         * cities_idはcitiesテーブルのID
+         * city_idはusersテーブルのID
+         */
     }
 }

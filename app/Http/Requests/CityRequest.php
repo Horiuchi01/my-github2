@@ -32,12 +32,18 @@ class CityRequest extends FormRequest
     {
         return $this->input("city");
     }
+
     public function latitude(): float
     {
         return $this->input("latitude");
     }
+    
     public function longitude(): float
     {
         return $this->input("longitude");
+    }
+    public function cities_id(): float
+    {
+        return $this->input("cities_id");
     }
 }

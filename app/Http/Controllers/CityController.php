@@ -16,6 +16,7 @@ class CityController extends Controller
         $city->city = $request->city();
         $city->latitude = $request->latitude();
         $city->longitude = $request->longitude();
+        $city->cities_id = $request->cities_id();
         $city->save();
         return redirect()->route("dashboard");
     }
